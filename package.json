@@ -1,0 +1,44 @@
+{
+  "name": "@dherman/target-matrix",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Define a cross-compilation target matrix for your CI",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npm-run-all build:clean build:ts build:dist build:docs",
+    "build:clean": "rimraf dist lib",
+    "build:dist": "ncc build src/index.ts",
+    "build:ts": "tsc",
+    "build:docs": "action-docs --update-readme",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dherman/target-matrix.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "cross-compile"
+  ],
+  "author": "Dave Herman <david.herman@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dherman/target-matrix/issues"
+  },
+  "homepage": "https://github.com/dherman/target-matrix#readme",
+  "devDependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.1.1",
+    "@vercel/ncc": "^0.36.1",
+    "action-docs": "^1.2.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^4.4.0",
+    "typescript": "^5.0.2"
+  },
+  "volta": {
+    "node": "16.19.1"
+  }
+}

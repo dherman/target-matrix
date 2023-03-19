@@ -1,0 +1,25 @@
+name: '@dherman/target-matrix'
+description: 'Define a cross-compilation target matrix'
+author: 'Dave Herman <david.herman@gmail.com>'
+inputs:
+  toolchain:
+    description: 'Compiler toolchain defining the vocabulary of targets. Valid values: rust'
+    required: true
+  windows-latest:
+    description: 'Space-separated list of targets to be built in Windows jobs.'
+    default: ''
+  macos-latest:
+    description: 'Space-separated list of targets to be built in macOS jobs.'
+    default: ''
+  ubuntu-latest:
+    description: 'Space-separated list of targets to be built in Ubuntu jobs.'
+    default: ''
+outputs:
+  include:
+    description: 'An array of (OS x target) pairs that can be added to a matrix with `strategy.matrix.include`.'
+branding:
+  icon: 'list'
+  color: 'red'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
