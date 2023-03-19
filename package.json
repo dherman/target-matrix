@@ -1,6 +1,6 @@
 {
   "name": "@dherman/target-matrix",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "private": true,
   "description": "Define a cross-compilation target matrix for your CI",
   "type": "module",

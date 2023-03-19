@@ -2827,29 +2827,23 @@ var __webpack_exports__ = {};
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(186);
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
 
+function collect(oses) {
+    const entries = [];
+    for (const os of oses) {
+        const targets = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput(os, { required: false }).trim().split(/\s+/);
+        for (const target of targets) {
+            entries.push({ os, target });
+        }
+    }
+    return entries;
+}
 async function run() {
     try {
         const toolchain = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('toolchain');
         if (toolchain !== 'rust') {
             throw new RangeError(`Unsupported toolchain '${toolchain}'. The only currently supported toolchain is 'rust'.`);
         }
-        const include = [];
-        // FIXME: abstract the repeated boilerplate
-        const windows = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('windows-latest', { required: false }).trim().split(/\s+/);
-        for (const target of windows) {
-            include.push({ os: 'windows-latest', target });
-            _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`pushing: ${JSON.stringify({ os: 'windows-latest', target })}`);
-        }
-        const macOS = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('macos-latest', { required: false }).trim().split(/\s+/);
-        for (const target of macOS) {
-            include.push({ os: 'macos-latest', target });
-            _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`pushing: ${JSON.stringify({ os: 'macos-latest', target })}`);
-        }
-        const ubuntu = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('ubuntu-latest', { required: false }).trim().split(/\s+/);
-        for (const target of ubuntu) {
-            include.push({ os: 'ubuntu-latest', target });
-            _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`pushing: ${JSON.stringify({ os: 'ubuntu-latest', target })}`);
-        }
+        const include = collect(['windows-latest', 'macos-latest', 'ubuntu-latest']);
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`setOutput('include', ${JSON.stringify(include)})`);
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput('include', include);
     }

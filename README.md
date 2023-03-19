@@ -38,7 +38,7 @@ jobs:
   matrix:
     runs-on: ubuntu-latest
     outputs:
-      include: ${{ steps.define.include }}
+      include: ${{ steps.define.outputs.include }}
     steps:
       - name: Define Cross-Compilation Target Matrix
         id: define
@@ -54,7 +54,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        include: ${{ needs.matrix.include }}
+        include: ${{ needs.matrix.outputs.include }}
     steps:
       - name: Show Target
         # Actual build command would go here

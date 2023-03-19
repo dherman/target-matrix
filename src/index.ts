@@ -1,5 +1,25 @@
 import * as core from '@actions/core';
 
+type RunnerOs = 'windows-latest' | 'macos-latest' | 'ubuntu-latest';
+
+type MatrixEntry = {
+  os: RunnerOs,
+  target: string
+};
+
+function collect(oses: RunnerOs[]): MatrixEntry[] {
+  const entries = [];
+
+  for (const os of oses) {
+    const targets = core.getInput(os, { required: false }).trim().split(/\s+/);
+    for (const target of targets) {
+      entries.push({ os, target });
+    }
+  }
+
+  return entries;
+}
+
 async function run(): Promise<void> {
   try {
     const toolchain = core.getInput('toolchain');
@@ -7,27 +27,7 @@ async function run(): Promise<void> {
       throw new RangeError(`Unsupported toolchain '${toolchain}'. The only currently supported toolchain is 'rust'.`);
     }
 
-    const include = [];
-
-    // FIXME: abstract the repeated boilerplate
-
-    const windows = core.getInput('windows-latest', { required: false }).trim().split(/\s+/);
-    for (const target of windows) {
-      include.push({ os: 'windows-latest', target });
-      core.info(`pushing: ${JSON.stringify({ os: 'windows-latest', target })}`);
-    }
-
-    const macOS = core.getInput('macos-latest', { required: false }).trim().split(/\s+/);
-    for (const target of macOS) {
-      include.push({ os: 'macos-latest', target });
-      core.info(`pushing: ${JSON.stringify({ os: 'macos-latest', target })}`);
-    }
-
-    const ubuntu = core.getInput('ubuntu-latest', { required: false }).trim().split(/\s+/);
-    for (const target of ubuntu) {
-      include.push({ os: 'ubuntu-latest', target });
-      core.info(`pushing: ${JSON.stringify({ os: 'ubuntu-latest', target })}`);
-    }
+    const include = collect(['windows-latest', 'macos-latest', 'ubuntu-latest']);
 
     core.info(`setOutput('include', ${JSON.stringify(include)})`);
     core.setOutput('include', include);
