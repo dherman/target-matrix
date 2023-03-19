@@ -2838,15 +2838,19 @@ async function run() {
         const windows = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('windows-latest', { required: false }).trim().split(/\s+/);
         for (const target of windows) {
             include.push({ os: 'windows-latest', target });
+            _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`pushing: ${JSON.stringify({ os: 'windows-latest', target })}`);
         }
         const macOS = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('macos-latest', { required: false }).trim().split(/\s+/);
         for (const target of macOS) {
             include.push({ os: 'macos-latest', target });
+            _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`pushing: ${JSON.stringify({ os: 'macos-latest', target })}`);
         }
         const ubuntu = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('ubuntu-latest', { required: false }).trim().split(/\s+/);
         for (const target of ubuntu) {
             include.push({ os: 'ubuntu-latest', target });
+            _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`pushing: ${JSON.stringify({ os: 'ubuntu-latest', target })}`);
         }
+        _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`setOutput('include', ${JSON.stringify(include)})`);
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.setOutput('include', include);
     }
     catch (err) {
